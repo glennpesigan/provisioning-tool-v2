@@ -1875,7 +1875,7 @@ public void editNegotiationTask(String title, String description, String owner, 
 			createApprovalTask("Approval For Award", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Signature":
-			createSignatureTask(signatureProvider, signer, title, description, owner, isMilestone, repeat, predecessors, associatedDocument);
+			editSignatureTask(signatureProvider, signer, title, description, owner, isMilestone, repeat, predecessors, associatedDocument);
 			break;
 		}
 		
@@ -1902,6 +1902,7 @@ public void editNegotiationTask(String title, String description, String owner, 
 			click(Element.btnOK);
 		}
 	}
+	
 	
 	public void sendKeysEnter(By locator) {
 		short count = 0;
@@ -2047,7 +2048,34 @@ public void editNegotiationTask(String title, String description, String owner, 
 
 	}
 	
-	
+public void editSignatureTask(String signatureProvider, String signer, String title, String description, String owner, String isMilestone, String repeat, String predecessors, String associatedDocument) {
+		
+		writeToLogs("Edit Signature Task");
+		
+		populateTextField("Title", title);
+		inputDescription(Element.txtProjectDescription, description);
+
+		if (signatureProvider.equals("DocuSign")){
+			waitFor(2);
+			addSigner(signer);
+			waitFor(2);
+		}
+
+		populateChooserField("Owner", owner);
+		populateRadioButton("Is milestone", isMilestone);
+//		populateRadioButton("Required", required);
+		populateRadioButton("Repeat for Each Document Draft", repeat);
+		waitFor(2);
+		
+		
+		//Predecessor
+		selectPredecessors(predecessors);
+		
+		
+		waitFor(2);
+		click(Element.btnOK);
+
+	}
 	
 	public void addSigner(String value){
 		if (!value.isEmpty()){

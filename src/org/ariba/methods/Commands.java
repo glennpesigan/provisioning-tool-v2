@@ -172,7 +172,7 @@ public class Commands {
 	
 	public void editToDoTask(String title, String description, String owner, String observers, String isMilestone, String required, String rank, String predecessors, String associatedDocument, String conditions){
 
-		click(Element.lnkEdit);
+//		click(Element.lnkEdit);
 		
 		writeToLogs("Edit To Do Task");
 		
@@ -278,6 +278,66 @@ public class Commands {
 		
 	}
 	
+public void editNotificationTask(String title, String description, String owner, String recipients, String notificationDays, String notificationFrequency, String autoStart, String manualCompletion, String predecessors, String associatedDocument){
+		
+		writeToLogs("Edit Notification Task");
+		
+		if (!associatedDocument.isEmpty()){
+			
+			click(Element.lnkCreateToDoTask);
+			waitFor(2);
+			click(Element.btnOK);
+
+			waitFor(2);
+			
+			if(Details.template.equals("Event Template")){
+				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
+					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
+					for (WebElement expand : imgExpand){
+						expand.click();
+						waitFor(2);
+					}
+				}
+			}
+			
+			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+			click(Element.lnkAssociateDocument);
+			associateDocument("Notification", associatedDocument);
+			
+		}else{
+			
+//		click(Element.lnkEdit);
+			
+		}
+		
+		waitFor(2);
+		populateTextField("Title", title);
+		inputDescription(Element.txtProjectDescription, description);
+		populateChooserField("Owner", owner);
+		populateChooserMultiple("Recipients", recipients);
+		
+		if (!notificationDays.isEmpty()){
+			String [] notifDays = notificationDays.split("-");
+			System.out.println(notifDays[0] + " - " + notifDays[1]);
+			populateTextField("Notification Days", notifDays[0]);
+			populateDropdown("Notification Days", notifDays[1]);
+		}
+		
+		populateDropdown("Notification Frequency", notificationFrequency);
+		waitFor(2);
+		populateCheckBox("Should Auto-Start Schedule", autoStart);
+		populateCheckBox("Requires Manual Completion", manualCompletion);
+		
+		//Predecessor
+		selectPredecessors(predecessors);
+		
+//		populateTextField("Rank", rank);
+		
+		waitFor(1);
+		click(Element.btnOK);
+		
+	}
+	
 	
 	
 	public void createReviewTask(String taskType, String title, String description, String owner, String reviewers, String approvalRuleFlow, String observers, String milestone, String required, String repeat, String predecessors, String associatedDocument){
@@ -350,6 +410,80 @@ public class Commands {
 
 		
 	}
+	
+	
+	
+public void editReviewTask(String taskType, String title, String description, String owner, String reviewers, String approvalRuleFlow, String observers, String milestone, String required, String repeat, String predecessors, String associatedDocument){
+	
+	writeToLogs("Create " + taskType + " Task");
+	
+	if (!associatedDocument.isEmpty()){
+		
+		click(Element.lnkCreateToDoTask);
+		waitFor(2);
+		click(Element.btnOK);
+
+		waitFor(2);
+		
+		if(Details.template.equals("Event Template")){
+			if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
+				List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
+				for (WebElement expand : imgExpand){
+					expand.click();
+					waitFor(2);
+				}
+			}
+		}
+		
+		sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+		click(Element.lnkAssociateDocument);
+		associateDocument(taskType, associatedDocument);
+		
+	}else{
+		
+//		click(Element.lnkCreateReviewTask);
+		
+	}
+
+	waitFor(2);
+	populateTextField("Title", title);
+	inputDescription(Element.txtProjectDescription, description);
+	populateChooserField("Owner", owner);
+	populateChooserMultiple("Reviewers", reviewers);
+	
+	//Approval Rule Flow Type
+	switch (approvalRuleFlow.toLowerCase()){
+	case "parallel":
+		click(Element.rdoParallel);
+		waitFor(3);
+		break;
+	case "serial":
+		click(Element.rdoSerial);
+		waitFor(3);
+		break;
+	case "custom":
+		click(Element.rdoCustom);
+		waitFor(3);
+		break;
+	}
+	
+	populateChooserMultiple("Observers", observers);
+	populateRadioButton("Is milestone", milestone);
+	populateRadioButton("Required", required);
+	populateRadioButton("Repeat for Each Document Draft", repeat);
+	
+	
+	//Predecessor
+	selectPredecessors(predecessors);
+	
+//	populateTextField("Rank", rank);
+	
+	waitFor(2);
+	click(Element.btnOK);
+
+	
+}
+
 	
 	
 	
@@ -494,6 +628,75 @@ public class Commands {
 		click(Element.btnOK);
 
 	}
+public void editNegotiationTask(String title, String description, String owner, String reviewers, String approvalRuleFlow, String observers, String milestone, String required, String repeat, String predecessors, String associatedDocument){
+		
+		writeToLogs("Create Negotiation Task");
+		
+		if (!associatedDocument.isEmpty()){
+			
+			click(Element.lnkCreateToDoTask);
+			waitFor(2);
+			click(Element.btnOK);
+
+			waitFor(2);
+			
+			if(Details.template.equals("Event Template")){
+				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
+					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
+					for (WebElement expand : imgExpand){
+						expand.click();
+						waitFor(2);
+					}
+				}
+			}
+			
+			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+			click(Element.lnkAssociateDocument);
+			associateDocument("Negotiation", associatedDocument);
+			
+		}else{
+//			click(Element.lnkCreateNegotiationTask);
+		}
+
+		waitFor(2);
+		populateTextField("Title", title);
+		inputDescription(Element.txtProjectDescription, description);
+		populateChooserField("Owner", owner);
+		
+		populateChooserMultiple("Reviewers", reviewers);
+		
+		//Approval Rule Flow Type
+		switch (approvalRuleFlow.toLowerCase()){
+		case "parallel":
+			click(Element.rdoParallel);
+			waitFor(3);
+			break;
+		case "serial":
+			click(Element.rdoSerial);
+			waitFor(3);
+			break;
+		case "custom":
+			click(Element.rdoCustom);
+			waitFor(3);
+			break;
+		}
+		
+		populateChooserMultiple("Observers", observers);
+		populateRadioButton("Is milestone", milestone);
+		populateRadioButton("Required", required);
+		populateRadioButton("Repeat for Each Document Draft", repeat);
+		
+		
+		//Predecessor
+		selectPredecessors(predecessors);
+		
+//		populateTextField("Rank", rank);
+		
+		click(Element.btnOK);
+
+	}
+	
+
 	
 	
 	public void createNewDocument(String documentPath, String title, String description, String owner, String isPublishRequired){
@@ -1292,8 +1495,8 @@ public class Commands {
 			String subPhase1 = task[1].trim();
 			String subPhase2 = task[2].trim();
 			String phaseDescription = task[3].trim();
-			String recurringSchedule = task[4].trim();
-			String recurrencePattern = task[5].trim();
+//			String recurringSchedule = task[4].trim();
+//			String recurrencePattern = task[5].trim();
 			
 			//Tasks
 			String title = task[6].trim();
@@ -1327,10 +1530,10 @@ public class Commands {
 			String signatureProvider = task[25].trim();
 			String signer = task[26].trim();
 			
-			String action = task[27].trim();
-			String rank = task[28].trim();
-			String newPhaseTitle = task[29].trim();
-			String newTaskName = task[30].trim();
+			String action = task[28].trim();
+			String rank = task[27].trim();
+//			String newPhaseTitle = task[29].trim();
+//			String newTaskName = task[30].trim();
 			
 			//Phase
 			
@@ -1544,7 +1747,8 @@ public class Commands {
 						waitFor(2);
 						sendKeysEnter(By.xpath("//a[contains(.,'"+title+"')]"));
 						click(Element.lnkEdit);
-						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+//						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+						editTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer, rank, conditions);
 						populateCondition(By.xpath("//td[@class='tableBody w-tbl-cell' and contains(.,'"+title+"')]/following-sibling::td[4]//a"), conditions);
 						
 					}else if(!phase.isEmpty() && !subPhase1.isEmpty() && subPhase2.isEmpty()){
@@ -1642,23 +1846,24 @@ public class Commands {
 	}
 	
 	
-	public void editTask(String taskType, String title, String description, String owner, String observers, String isMilestone, String required, String predecessors, String recipients, String notificationDays, String notificationFrequency, String autoStart, String manualCompletion, String associatedDocument, String reviewers, String approvalRuleFlow, String repeat, String allowAutoApproval, String signatureProvider, String signer){
+
+	public void editTask(String taskType, String title, String description, String owner, String observers, String isMilestone, String required, String predecessors, String recipients, String notificationDays, String notificationFrequency, String autoStart, String manualCompletion, String associatedDocument, String reviewers, String approvalRuleFlow, String repeat, String allowAutoApproval, String signatureProvider, String signer, String rank, String conditions){
 		
 		switch (taskType){
 		case "To Do":
-			createToDoTask(title, description, owner, observers, isMilestone, required, predecessors, associatedDocument);
+			editToDoTask( title, description, owner, observers, isMilestone, required, rank, predecessors, associatedDocument, conditions);
 			break;
 		case "Notification":
-			createNotificationTask(title, description, owner, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, predecessors, associatedDocument);
+			editNotificationTask(title, description, owner, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, predecessors, associatedDocument);
 			break;
 		case "Review":
-			createReviewTask("Review", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editReviewTask("Review", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Review for Team Grading":
-			createReviewTask("Review for Team Grading", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+//			createReviewTask("Review for Team Grading", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Negotiation":
-			createNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval":
 			createApprovalTask("Approval", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
@@ -1676,6 +1881,7 @@ public class Commands {
 		
 		
 	}
+	
 	
 	
 	public void selectPredecessors(String predecessors){
@@ -2212,7 +2418,7 @@ public class Commands {
 						click(Element.btnSearchField);
 						waitFor(2);
 						if (explicitWait(By.xpath("//tr[contains(@class,'tableRow1') and contains(.,'"+val+"')]//td//label"), 5) != null){
-							click(By.xpath("//tr[contains(@class,'tableRow1') and contains(.,'"+val+"')]//td//label"));
+//							click(By.xpath("//tr[contains(@class,'tableRow1') and contains(.,'"+val+"')]//td//label"));
 							waitFor(2);
 						}else{
 							writeToLogs("[ERROR] Cannot find " +val+ " value for Roles");

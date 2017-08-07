@@ -234,10 +234,10 @@ public class Templates {
 		
 		
 		/*-------------Documents Tab-----------------*/
-		action.writeToLogs("---------------DOCUMENTS----------------");
-		action.configureDocumentsTab();
-		action.writeToLogs("----------------------------------------");
-		action.writeToLogs("");
+//		action.writeToLogs("---------------DOCUMENTS----------------");
+//		action.configureDocumentsTab();
+//		action.writeToLogs("----------------------------------------");
+//		action.writeToLogs("");
 		/*-----------End of Documents----------------*/
 
 		

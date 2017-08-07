@@ -172,7 +172,7 @@ public class Commands {
 	
 	public void editToDoTask(String title, String description, String owner, String observers, String isMilestone, String required, String rank, String predecessors, String associatedDocument, String conditions){
 
-//		click(Element.lnkEdit);
+		click(Element.lnkEdit);
 		
 		writeToLogs("Edit To Do Task");
 		
@@ -195,16 +195,6 @@ public class Commands {
 		
 		waitFor(2);
 		click(Element.btnOK);
-		
-		if (!associatedDocument.isEmpty()){
-			
-			waitFor(2);
-			sendKeysEnter(By.xpath("//a[contains(.,'"+title+"')]"));
-			click(Element.lnkAssociateDocument);
-			associateDocument("", associatedDocument);
-			waitFor(2);
-			click(Element.btnOK);
-		}
 		
 	}
 	
@@ -560,6 +550,79 @@ public void editReviewTask(String taskType, String title, String description, St
 
 	}
 	
+	public void editApprovalTask(String taskType, String title, String description, String owner, String allowAutoApproval, String approvers, String approvalRuleFlow, String observers, String milestone, String required, String repeat, String predecessors, String associatedDocument){
+
+		writeToLogs("Create " + taskType + " Task");
+		
+//		if (!associatedDocument.isEmpty()){
+//			
+//			click(Element.lnkCreateToDoTask);
+//			waitFor(2);
+//			click(Element.btnOK);
+//
+//			waitFor(2);
+//			
+//			if(Details.template.equals("Event Template")){
+//				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
+//					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
+//					for (WebElement expand : imgExpand){
+//						expand.click();
+//						waitFor(2);
+//					}
+//				}
+//			}
+//			
+//			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+//			click(Element.lnkAssociateDocument);
+//			associateDocument(taskType, associatedDocument);
+//			
+//		}else{
+//			
+//			click(Element.lnkCreateApprovalTask);
+//			
+//		}
+
+		waitFor(2);
+		populateTextField("Title", title);
+		inputDescription(Element.txtProjectDescription, description);
+		populateChooserField("Owner", owner);
+		
+		populateRadioButton("Allow auto approval", allowAutoApproval);
+		
+		populateChooserMultiple("Approvers", approvers);
+		
+		//Approval Rule Flow Type
+		switch (approvalRuleFlow.toLowerCase()){
+		case "parallel":
+			click(Element.rdoParallel);
+			waitFor(3);
+			break;
+		case "serial":
+			click(Element.rdoSerial);
+			waitFor(3);
+			break;
+		case "custom":
+			click(Element.rdoCustom);
+			waitFor(3);
+			break;
+		}
+		
+		populateChooserMultiple("Observers", observers);
+		populateRadioButton("Is milestone", milestone);
+		populateRadioButton("Required", required);
+		populateRadioButton("Repeat for Each Document Draft", repeat);
+		
+		
+		//Predecessor
+		selectPredecessors(predecessors);
+		
+//		populateTextField("Rank", rank);
+		
+		waitFor(2);
+		click(Element.btnOK);
+
+	}
+	
 	
 	public void createNegotiationTask(String title, String description, String owner, String reviewers, String approvalRuleFlow, String observers, String milestone, String required, String repeat, String predecessors, String associatedDocument){
 		
@@ -632,31 +695,9 @@ public void editNegotiationTask(String title, String description, String owner, 
 		
 		writeToLogs("Create Negotiation Task");
 		
-		if (!associatedDocument.isEmpty()){
-			
-			click(Element.lnkCreateToDoTask);
-			waitFor(2);
-			click(Element.btnOK);
 
-			waitFor(2);
-			
-			if(Details.template.equals("Event Template")){
-				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
-					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
-					for (WebElement expand : imgExpand){
-						expand.click();
-						waitFor(2);
-					}
-				}
-			}
-			
-			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
-			click(Element.lnkAssociateDocument);
-			associateDocument("Negotiation", associatedDocument);
-			
-		}else{
 //			click(Element.lnkCreateNegotiationTask);
-		}
+		
 
 		waitFor(2);
 		populateTextField("Title", title);
@@ -1860,13 +1901,13 @@ public void editNegotiationTask(String title, String description, String owner, 
 			editReviewTask("Review", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Review for Team Grading":
-//			createReviewTask("Review for Team Grading", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editReviewTask("Review for Team Grading", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Negotiation":
-			editNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+//			editNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval":
-			createApprovalTask("Approval", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editApprovalTask("Approval", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval For Publish":
 			createApprovalTask("Approval For Publish", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);

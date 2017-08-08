@@ -272,33 +272,6 @@ public void editNotificationTask(String title, String description, String owner,
 		
 		writeToLogs("Edit Notification Task");
 		
-		if (!associatedDocument.isEmpty()){
-			
-			click(Element.lnkCreateToDoTask);
-			waitFor(2);
-			click(Element.btnOK);
-
-			waitFor(2);
-			
-			if(Details.template.equals("Event Template")){
-				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
-					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
-					for (WebElement expand : imgExpand){
-						expand.click();
-						waitFor(2);
-					}
-				}
-			}
-			
-			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
-			click(Element.lnkAssociateDocument);
-			associateDocument("Notification", associatedDocument);
-			
-		}else{
-			
-//		click(Element.lnkEdit);
-			
-		}
 		
 		waitFor(2);
 		populateTextField("Title", title);
@@ -407,33 +380,6 @@ public void editReviewTask(String taskType, String title, String description, St
 	
 	writeToLogs("Create " + taskType + " Task");
 	
-	if (!associatedDocument.isEmpty()){
-		
-		click(Element.lnkCreateToDoTask);
-		waitFor(2);
-		click(Element.btnOK);
-
-		waitFor(2);
-		
-		if(Details.template.equals("Event Template")){
-			if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
-				List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
-				for (WebElement expand : imgExpand){
-					expand.click();
-					waitFor(2);
-				}
-			}
-		}
-		
-		sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
-		click(Element.lnkAssociateDocument);
-		associateDocument(taskType, associatedDocument);
-		
-	}else{
-		
-//		click(Element.lnkCreateReviewTask);
-		
-	}
 
 	waitFor(2);
 	populateTextField("Title", title);
@@ -554,33 +500,6 @@ public void editReviewTask(String taskType, String title, String description, St
 
 		writeToLogs("Create " + taskType + " Task");
 		
-//		if (!associatedDocument.isEmpty()){
-//			
-//			click(Element.lnkCreateToDoTask);
-//			waitFor(2);
-//			click(Element.btnOK);
-//
-//			waitFor(2);
-//			
-//			if(Details.template.equals("Event Template")){
-//				if (explicitWait(By.className("w-oc-icon-off"), 5) != null){
-//					List <WebElement> imgExpand = driver.findElements(By.className("w-oc-icon-off"));
-//					for (WebElement expand : imgExpand){
-//						expand.click();
-//						waitFor(2);
-//					}
-//				}
-//			}
-//			
-//			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
-//			click(Element.lnkAssociateDocument);
-//			associateDocument(taskType, associatedDocument);
-//			
-//		}else{
-//			
-//			click(Element.lnkCreateApprovalTask);
-//			
-//		}
 
 		waitFor(2);
 		populateTextField("Title", title);
@@ -1771,7 +1690,9 @@ public void editNegotiationTask(String title, String description, String owner, 
 						waitFor(2);
 						sendKeysEnter(By.xpath("//a[contains(.,'"+title+"')]"));
 						click(Element.lnkEdit);
-						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+//						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+						editTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer, rank, conditions);
+
 						populateCondition(By.xpath("//td[@class='tableBody w-tbl-cell' and contains(.,'"+title+"')]/following-sibling::td[4]//a"), conditions);
 						
 					}else if (!phase.isEmpty() && subPhase1.isEmpty()){
@@ -1808,7 +1729,8 @@ public void editNegotiationTask(String title, String description, String owner, 
 						waitFor(2);
 						sendKeysEnter(By.xpath("//a[contains(.,'"+title+"')]"));
 						click(Element.lnkEdit);
-						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+//						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+						editTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer, rank, conditions);
 						populateCondition(By.xpath("//td[@class='tableBody w-tbl-cell' and contains(.,'"+title+"')]/following-sibling::td[4]//a"), conditions);
 						
 					}else if(!phase.isEmpty() && !subPhase1.isEmpty() && !subPhase2.isEmpty()){
@@ -1827,7 +1749,8 @@ public void editNegotiationTask(String title, String description, String owner, 
 						waitFor(2);
 						sendKeysEnter(By.xpath("//a[contains(.,'"+title+"')]"));
 						click(Element.lnkEdit);
-						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+//						createTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer);
+						editTask(type, title, description, owner, observers, isMilestone, required, predecessors, recipients, notificationDays, notificationFrequency, autoStart, manualCompletion, associatedDocument, reviewers, approvalRuleFlow, repeat, allowAutoApproval, signatureProvider, signer, rank, conditions);
 						populateCondition(By.xpath("//td[@class='tableBody w-tbl-cell' and contains(.,'"+title+"')]/following-sibling::td[4]//a"), conditions);
 						
 					}
@@ -1904,16 +1827,16 @@ public void editNegotiationTask(String title, String description, String owner, 
 			editReviewTask("Review for Team Grading", title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Negotiation":
-//			editNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editNegotiationTask(title, description, owner, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval":
 			editApprovalTask("Approval", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval For Publish":
-			createApprovalTask("Approval For Publish", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editApprovalTask("Approval For Publish", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Approval For Award":
-			createApprovalTask("Approval For Award", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
+			editApprovalTask("Approval For Award", title, description, owner, allowAutoApproval, reviewers, approvalRuleFlow, observers, isMilestone, required, repeat, predecessors, associatedDocument);
 			break;
 		case "Signature":
 			createSignatureTask(signatureProvider, signer, title, description, owner, isMilestone, repeat, predecessors, associatedDocument);
@@ -2013,7 +1936,82 @@ public void editNegotiationTask(String title, String description, String owner, 
 	}
 	
 	
-	public void createSignatureTask(String signatureProvider, String signer, String title, String description, String owner, String isMilestone, String repeat, String predecessors, String associatedDocument) {
+	public void editSignatureTask(String signatureProvider, String signer, String title, String description, String owner, String isMilestone, String repeat, String predecessors, String associatedDocument) {
+		
+		writeToLogs("Create Signature Task");
+		
+		if (!associatedDocument.isEmpty()){
+			
+			click(Element.lnkCreateToDoTask);
+			waitFor(2);
+			click(Element.btnOK);
+
+			waitFor(2);
+			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+			click(Element.lnkAssociateDocument);
+			associateDocument("Signature", associatedDocument);
+			
+			
+			switch (signatureProvider){
+			case "DocuSign":
+				click(By.xpath("//td[contains(text(),'DocuSign')]/preceding-sibling::td//label"));
+				waitFor(2);
+				break;
+			case "Paper Signature":
+				click(By.xpath("//td[contains(text(),'Paper Signature')]/preceding-sibling::td//label"));
+				waitFor(2);
+				break;
+			}
+			
+			//Click OK button
+			click(By.id("_iye0e"));
+			
+			
+			
+		}else{
+			
+			click(Element.lnkCreateSignatureTask);
+			
+		}
+		
+		populateTextField("Title", title);
+		inputDescription(Element.txtProjectDescription, description);
+
+		if (signatureProvider.equals("DocuSign")){
+			waitFor(2);
+			addSigner(signer);
+			waitFor(2);
+		}
+
+		populateChooserField("Owner", owner);
+		populateRadioButton("Is milestone", isMilestone);
+//		populateRadioButton("Required", required);
+		populateRadioButton("Repeat for Each Document Draft", repeat);
+		waitFor(2);
+		
+		
+		//Predecessor
+		selectPredecessors(predecessors);
+		
+		
+		waitFor(2);
+		click(Element.btnOK);
+		
+		if (!associatedDocument.isEmpty()){
+			waitFor(2);
+			clickButton("Cancel");
+			waitFor(2);
+			sendKeysEnter(By.xpath("//a[contains(.,'New To Do Task')]"));
+			click(Element.lnkViewTaskDetails);
+			waitFor(3);
+			clickActions("Delete");
+			waitFor(2);
+			click(Element.btnOK);
+		}
+
+	}
+	
+public void createSignatureTask(String signatureProvider, String signer, String title, String description, String owner, String isMilestone, String repeat, String predecessors, String associatedDocument) {
 		
 		writeToLogs("Create Signature Task");
 		

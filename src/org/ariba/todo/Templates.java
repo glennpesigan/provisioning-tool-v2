@@ -177,9 +177,7 @@ public class Templates {
 			break;
 		
 		}
-
-
-			
+	
 		//Click Ignore button
 		if (action.isElementVisible(Element.btnIgnore, 5)){
 			action.click(Element.btnIgnore);
@@ -208,12 +206,12 @@ public class Templates {
 		}
 		
 		/*--------------Conditions Tab---------------*/
-//		action.writeToLogs("---------------CONDITIONS---------------");
-//		action.addCondition();
-//		action.waitFor(1);
-//		action.addQuestion();
-//		action.writeToLogs("----------------------------------------");
-//		action.writeToLogs("");
+		action.writeToLogs("---------------CONDITIONS---------------");
+		action.addCondition();
+		action.waitFor(1);
+		action.addQuestion();
+		action.writeToLogs("----------------------------------------");
+		action.writeToLogs("");
 		/*--------------End of Conditions------------*/
 		
 		
@@ -235,10 +233,10 @@ public class Templates {
 		
 		 
 		/*-------------Documents Tab-----------------*/
-//		action.writeToLogs("---------------DOCUMENTS----------------");
-//		action.configureDocumentsTab();
-//		action.writeToLogs("----------------------------------------");
-//		action.writeToLogs("");
+		action.writeToLogs("---------------DOCUMENTS----------------");
+		action.configureDocumentsTab();
+		action.writeToLogs("----------------------------------------");
+		action.writeToLogs("");
 		/*-----------End of Documents----------------*/
 
 		
